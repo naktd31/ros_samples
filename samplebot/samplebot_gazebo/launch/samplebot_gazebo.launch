@@ -1,0 +1,21 @@
+<launch>
+  <arg name="real" default="false" />
+  <arg name="load_description" default="true" />
+
+  <include file="$(find samplebot_description)/launch/samplebot_description.launch" if="$(arg load_description)" />
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="false" />
+    <arg name="use_sim_time" value="false" />
+    <arg name="gui" value="true" />
+    <arg name="verbose" value="true" />
+  </include>
+
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"
+    args="-param robot_description -urdf -model samplebot" />
+
+  <include file="$(find samplebot_control)/launch/samplebot_control.launch" >
+    <arg name="real" default="false" />
+    <arg name="load_description" default="false" />
+  </include>
+</launch>
