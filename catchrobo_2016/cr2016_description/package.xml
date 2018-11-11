@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>cr2016_description</name>
+  <version>0.0.0</version>
+  <description>The cr2016_description package</description>
+  o
+  <maintainer email="disktnk11@gmail.com">Daisuke Tanaka</maintainer>
+
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <export>
+  </export>
+</package>

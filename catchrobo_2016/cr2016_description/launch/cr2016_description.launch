@@ -1,0 +1,4 @@
+<launch>
+  <arg name="model" default="$(find cr2016_description)/model/cr2016_robot.urdf.xacro" />
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)" />
+</launch>
