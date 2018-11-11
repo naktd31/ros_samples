@@ -1,0 +1,3 @@
+<launch>
+  <rosparam param="robot_description" command="load" file="$(find samplebot_description)/urdf/samplebot.urdf" />
+</launch>
