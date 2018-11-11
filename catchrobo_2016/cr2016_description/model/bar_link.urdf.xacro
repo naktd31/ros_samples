@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find cr2016_description)/model/common.xacro" />
+
+  <xacro:macro name="bar_link" params="suffix parent length mass *joint_origin *link_origin" >
+    <link name="bar_${suffix}_link" >
+      <collision>
+        <xacro:insert_block name="link_origin" />
+        <geometry>
+          <box size="${length} 0.1 0.1" />
+        </geometry>
+      </collision>
+      <visual>
+        <xacro:insert_block name="link_origin" />
+        <geometry>
+          <box size="${length} 0.1 0.1" />
+        </geometry>
+        <material name="Cyan" >
+          <color rgba="0 1.0 1.0 1.0" />
+        </material>
+      </visual>
+      <inertial>
+        <mass value="${mass}" />
+        <xacro:insert_block name="link_origin" />
+        <inertia ixx="${0.05*0.05*2*mass/3}"
+          iyy="${(0.05*0.05 + length*length) * mass / 3}"
+          izz="${(0.05*0.05 + length*length) * mass / 3}"
+          ixy="0" ixz="0" iyz="0" />
+      </inertial>
+    </link>
+    <joint name="bar_${suffix}_joint" type="fixed">
+      <parent link="${parent}" />
+      <child link="bar_${suffix}_link" />
+      <xacro:insert_block name="joint_origin" />
+    </joint>
+  </xacro:macro>
+</robot>

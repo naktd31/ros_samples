@@ -1,0 +1,4 @@
+<launch>
+  <rosparam file="$(find cr2016_control)/config/cr2016_control.yaml" command="load" />
+  <rosparam file="$(find cr2016_control)/config/cr2016_joint_limits.yaml" command="load" ns="/cr2016" />
+</launch>

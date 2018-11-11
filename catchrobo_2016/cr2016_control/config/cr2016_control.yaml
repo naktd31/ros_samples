@@ -1,0 +1,18 @@
+cr2016:
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 30
+
+  joint_controller:
+    type: "effort_controllers/JointTrajectoryController"
+    joints:
+      - cylinder_1_joint
+      - cylinder_2_joint
+      - cylinder_3_joint
+      - cylinder_4_joint
+
+    gains:
+      cylinder_1_joint: {p: 500.0, i: 0.1, d: 1}
+      cylinder_2_joint: {p: 1000.0, i: 10.0,  d: 10}
+      cylinder_3_joint: {p: 500.0, i: 0.1, d: 1}
+      cylinder_4_joint: {p: 500.0, i: 0.1, d: 1}

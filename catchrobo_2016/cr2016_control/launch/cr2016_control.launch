@@ -1,0 +1,22 @@
+<launch>
+  <arg name="rviz" default="true" />
+  <arg name="load_param" default="true" />
+
+  <include file="$(find cr2016_control)/launch/cr2016_control_param.launch" if="$(arg load_param)"/>
+
+  <node name="controller_spawner" pkg="controller_manager" type="spawner"
+    respawn="false" output="screen" ns="/cr2016"
+    args="joint_controller"/>
+
+  <node name="joint_state_spawner" pkg="controller_manager" type="spawner"
+    respawn="false" output="screen" ns="/cr2016"
+    args="joint_state_controller" />
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+    respawn="false" output="screen">
+    <remap from="/joint_states" to="/cr2016/joint_states" />
+  </node>
+
+  <node name="control_rviz" pkg="rviz" type="rviz" args="-d $(find urdf_tutorial)/rviz/urdf.rviz"
+    if="$(arg rviz)" />
+</launch>

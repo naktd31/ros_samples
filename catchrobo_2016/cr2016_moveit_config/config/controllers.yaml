@@ -1,0 +1,11 @@
+controller_manager_ns: controller_manager
+controller_list:
+  - name: cr2016/joint_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+      - cylinder_1_joint
+      - cylinder_2_joint
+      - cylinder_3_joint
+      - cylinder_4_joint

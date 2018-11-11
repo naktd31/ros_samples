@@ -1,0 +1,11 @@
+<library path="lib/libcr2016_control">
+  <class
+    name="cr2016_control/cr2016HardwareGazebo"
+    type="cr2016_hardware_gazebo::cr2016HardwareGazebo"
+    base_class_type="gazebo_ros_control::RobotHWSim" >
+
+    <description>
+      cr2016 simulation interface.
+    </description>
+  </class>
+</library>

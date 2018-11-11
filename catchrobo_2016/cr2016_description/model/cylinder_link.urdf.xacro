@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find cr2016_description)/model/common.xacro" />
+
+  <xacro:macro name="cylinder_revolute_link"
+    params="suffix parent length mass *joint_origin *link_origin">
+    <link name="cylinder_${suffix}_link" >
+      <collision>
+        <xacro:insert_block name="link_origin" />
+        <geometry>
+          <cylinder radius="0.05" length="${length}" />
+        </geometry>
+      </collision>
+      <visual>
+        <xacro:insert_block name="link_origin" />
+        <geometry>
+          <cylinder radius="0.05" length="${length}" />
+        </geometry>
+        <material name="Red" >
+          <color rgba="1.0 0 0 1.0" />
+        </material>
+      </visual>
+      <inertial>
+        <xacro:insert_block name="link_origin" />
+        <mass value="${mass}" />
+        <inertia ixx="${0.05*0.05*mass/4 + length*length*mass/12}"
+          iyy="${0.05*0.05*mass/4 + length*length*mass/12}"
+          izz="${mass*0.05*0.05/2}"
+          ixy="0" ixz="0" iyz="0" />
+      </inertial>
+    </link>
+    <joint name="cylinder_${suffix}_joint" type="revolute">
+      <axis xyz="0 0 1" />
+      <parent link="${parent}" />
+      <child link="cylinder_${suffix}_link" />
+      <limit upper="${pi}" lower="-${pi}" velocity="100." effort="100.0" />
+      <xacro:insert_block name="joint_origin" />
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="cylinder_prismatic_link"
+    params="suffix parent length mass *joint_origin *link_origin *joint_limit">
+    <link name="cylinder_${suffix}_link" >
+      <collision>
+        <xacro:insert_block name="link_origin" />
+        <geometry>
+          <cylinder radius="0.05" length="${length}" />
+        </geometry>
+      </collision>
+      <visual>
+        <xacro:insert_block name="link_origin" />
+        <geometry>
+          <cylinder radius="0.05" length="${length}" />
+        </geometry>
+      <material name="Red" >
+        <color rgba="1.0 0 0 1.0" />
+      </material>
+      </visual>
+      <inertial>
+        <xacro:insert_block name="link_origin" />
+        <mass value="${mass}" />
+        <inertia ixx="${0.05*0.05*mass/4 + length*length*mass/12}"
+          iyy="${0.05*0.05*mass/4 + length*length*mass/12}"
+          izz="${mass*0.05*0.05/2}"
+          ixy="0" ixz="0" iyz="0" />
+      </inertial>
+    </link>
+    <joint name="cylinder_${suffix}_joint" type="prismatic">
+      <axis xyz="0 0 1" />
+      <parent link="${parent}" />
+      <child link="cylinder_${suffix}_link" />
+      <xacro:insert_block name="joint_limit" />
+      <xacro:insert_block name="joint_origin" />
+    </joint>
+  </xacro:macro>
+</robot>

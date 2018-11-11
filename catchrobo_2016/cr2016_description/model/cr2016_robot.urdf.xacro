@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<robot name="cr2016" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find cr2016_description)/model/common.xacro" />
+  <xacro:include filename="$(find cr2016_description)/model/cylinder_link.urdf.xacro" />
+  <xacro:include filename="$(find cr2016_description)/model/bar_link.urdf.xacro" />
+  <xacro:include filename="$(find cr2016_description)/model/transmission.xacro" />
+
+  <xacro:property name="cylinder1_length" value="0.5" />
+  <xacro:property name="cylinder2_length" value="1.1" />
+  <xacro:property name="cylinder3_length" value="0.01" />
+  <xacro:property name="cylinder4_length" value="0.05" />
+  <xacro:property name="bar1_length" value="0.5" />
+  <xacro:property name="bar2_length" value="0.5" />
+  <xacro:property name="bar3_length" value="0.3" />
+
+  <link name="world" />
+  <xacro:base_link suffix="1" height="1.0" >
+    <origin xyz="0 0 ${1.0}" rpy="0 0 0" />
+  </xacro:base_link>
+
+  <xacro:cylinder_revolute_link suffix="1" parent="base_1_link"
+    length="${cylinder1_length}" mass="1.0" >
+    <origin xyz="0 0 ${cylinder1_length}" rpy="0 0 0" />
+    <origin xyz="0 0 ${-cylinder1_length/2}" rpy="0 0 0" />
+  </xacro:cylinder_revolute_link>
+
+  <xacro:bar_link suffix="1" parent="cylinder_1_link" length="${bar1_length}" mass="1.0" >
+    <origin xyz="${-0.05 +bar1_length} 0 0.05" rpy="0 0 0" />
+    <origin xyz="${-bar1_length/2} 0 0" rpy="0 0 0" />
+  </xacro:bar_link>
+
+  <xacro:cylinder_prismatic_link suffix="2" parent="bar_1_link"
+    length="${cylinder2_length}" mass="1.0" >
+    <origin xyz="0.05 0 -0.05" rpy="0 0 0" />
+    <origin xyz="0 0 ${cylinder2_length/2}" rpy="0 0 0" />
+    <limit lower="${-cylinder2_length+0.1}" upper="0" velocity="100." effort="100.0" />
+  </xacro:cylinder_prismatic_link>
+
+  <xacro:cylinder_revolute_link suffix="3" parent="cylinder_2_link"
+    length="${cylinder3_length}" mass="0.0" >
+    <origin xyz="0 0 ${-cylinder3_length}" rpy="0 0 0" />
+    <origin xyz="0 0 ${cylinder3_length/2}" rpy="0 0 0" />
+  </xacro:cylinder_revolute_link>
+
+  <xacro:bar_link suffix="2" parent="cylinder_3_link" length="${bar2_length}" mass="1.0" >
+    <origin xyz="${-0.05 +bar2_length -0.05} 0 -0.1" rpy="0 0 0" />
+    <origin xyz="${0.05 -bar2_length/2} 0 0.05" rpy="0 0 0" />
+  </xacro:bar_link>
+
+  <xacro:cylinder_revolute_link suffix="4" parent="bar_2_link"
+    length="${cylinder4_length}" mass="1.0" >
+    <origin xyz="0 0 ${-cylinder4_length}" rpy="0 0 0" />
+    <origin xyz="0 0 ${cylinder4_length/2}" rpy="0 0 0" />
+  </xacro:cylinder_revolute_link>
+
+  <xacro:bar_link suffix="3" parent="cylinder_4_link" length="${bar3_length}" mass="1.0" >
+    <origin xyz="0 0 -0.1" rpy="0 0 ${pi/2}" />
+    <origin xyz="0 0 0.05" rpy="0 0 0" />
+  </xacro:bar_link>
+
+  <xacro:transmission_revolute suffix="revolute1" joint_name="cylinder_1_joint" reduction="1" />
+  <xacro:transmission_prismatic suffix="prismatic1" joint_name="cylinder_2_joint" reduction="1" />
+  <xacro:transmission_revolute suffix="revolute2" joint_name="cylinder_3_joint" reduction="1" />
+  <xacro:transmission_revolute suffix="revolute3" joint_name="cylinder_4_joint" reduction="1" />
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/cr2016</robotNamespace>
+      <!--
+      <ns>/cr2016</ns>
+      <robotSimType>cr2016_control/cr2016HardwareGazebo</robotSimType>-->
+    </plugin>
+  </gazebo>
+</robot>
