@@ -3,6 +3,7 @@
 #include <angles/angles.h>
 #include <samplebot_control/samplebot_hw.h>
 
+
 SamplebotHW::SamplebotHW(ros::NodeHandle &nh)
 {
   // connect and register the joint state interface
